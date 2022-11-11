@@ -65,7 +65,7 @@ function [Qsub, Qsup, R, I, s, L, ET] = hydro_model(P, Q_obs, ET_0, kc, K_sat, c
         ET=reshape(ET_hour_year,[],1);
         qsup=(t_sup^(-1)).*Vsup;
         qsub=(t_sub^(-1)).*Vsub;
-        Qsup=A*qsup;
-        Qsub=A*qsub;
+        Qsup=A*qsup/3.6;
+        Qsub=A*qsub/3.6;
     end
 end

@@ -65,8 +65,8 @@ function Q_mod = Q_mod(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1, n,
         ET=reshape(ET_hour_year,[],1);
         qsup=(t_sup^(-1)).*Vsup;
         qsub=(t_sub^(-1)).*Vsub;
-        Qsup=A*qsup;
-        Qsub=A*qsub;
+        Qsup=A*qsup/3.6;
+        Qsub=A*qsub/3.6;
         Q_mod = Qsub+Qsup+Q_b;
     end
 end
