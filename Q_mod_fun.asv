@@ -18,8 +18,6 @@ function Q_mod = Q_mod_fun(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1
     Q_hour_year=reshape(Q_obs,365*24,Nyears);
     P_hour_year=reshape(P,365*24,Nyears);
 
-    
-
     if mode == 0   %model for every hour
        
         % Settings
@@ -35,13 +33,8 @@ function Q_mod = Q_mod_fun(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1
         N_hours_per_year = 365*24;  %number of hours per year
         ET_hour_year = zeros(N_hours_per_year,1); 
         L = zeros(length(Q_obs),1);
-
         Q_mod = zeros(length(Q_obs),1);
-        Q_b = Q_b.*ones(length(Q_obs),1);
-        Qsub = zeros(length(Q_obs),1);
-        Qsup = zeros(length(Q_obs),1);
-        qsub = zeros(length(Q_obs),1);
-        qsup = zeros(length(Q_obs),1);
+        Q_b = Q_b*ones(length(Q_obs),1);
         
         % Infiltration
         K_sat_vect = ones(length(P),1)*K_sat;  % K_sat vector to compare with precipitation
@@ -55,7 +48,7 @@ function Q_mod = Q_mod_fun(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1
             for m=1:12
                 for h=month_start_hour(m):month_end_hour(m)
                     t=(y-1)*N_hours_per_year+h; 
-                    %disp(t)
+                    disp(t)
                     % Infiltration
                     I(t) = min(P(t), K_sat); %[m/h]
                     % Runoff
@@ -64,13 +57,13 @@ function Q_mod = Q_mod_fun(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1
                     
                     if s(t)<=sw && s(t)>=0
                         ET_hour_year(t)= 0; % [m/h]
-                        %disp('1st case')
+                        disp('1st case')
                     elseif s(t)<=s1 && s(t)>sw
                         ET_hour_year(t)= kc(m)*ET_0(m)*((s(t)-sw)/(s1-sw)); % [m/h]
-                        %disp('2nd case')
+                        disp('2nd case')
                     elseif s(t)<=1 && s(t)>s1
                         ET_hour_year(t)= kc(m)*ET_0(m); % [m/h]
-                        %disp('3rd case')
+                        disp('3rd case')
                     elseif s(t) > 1
                         disp('Warning : s > 1')
                     elseif s(t)<0
@@ -83,13 +76,13 @@ function Q_mod = Q_mod_fun(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1
 
                     qsup(t) = Vsup(t)/t_sup;    %[m/h]
                     Vsup(t+1)=Vsup(t)+ R(t) - qsup(t); % [m]
-                    Qsup(t)=A*qsup(t)/3.6;         % [m^3/h]
+                    Qsup=A*qsup(t)/3.6;         % [m^3/h]
 
                     qsub(t) = Vsub(t)/t_sub;
                     Vsub(t+1)=Vsub(t)+L(t)-(qsub(t));
-                    Qsub(t)=A*qsup(t)/3.6;
+                    Qsub=A*qsup(t)/3.6;
 
-                    Q_mod(t) = Qsub(t)+Qsup(t)+Q_b(t);
+                    Q_mod(t) = Qsub(t)+Qsup(t)+Q_b;
                 end
             end
         end

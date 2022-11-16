@@ -24,23 +24,23 @@ function Q_mod = Q_mod(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1, n,
         s = zeros(length(Q_obs),1);    % saturation vector
         s(1) = 0.5;                    % initial arbitrary value
         
-        Vsup = zeros(length(Q_obs),1);  % superficial stored volume vector
-        Vsup(1) = 0.5;                  % initial arbitrary value
+        Vsup = zeros(length(Q_obs),1);  % superficial stored volume vector 
+        Vsup(1) = 0.5;                  % initial arbitrary value [m]
         
-        Vsub = zeros(length(Q_obs),1); %  sub-superficial stored volume vector
-        Vsub(1) = 0.5;                  % initial arbitrary value
+        Vsub = zeros(length(Q_obs),1);  % sub-superficial stored volume vector
+        Vsub(1) = 0.5;                  % initial arbitrary value [m]
         
-        N_hours_per_year = 365*24;  %number of hours per year
-        ET_hour_year = zeros(N_hours_per_year,1); 
-        L = zeros(length(Q_obs),1);
+        N_hours_per_year = 365*24;      % number of hours per year 
+        ET_hour_year = zeros(N_hours_per_year,1); % evapotranspiration hourly [m/h]
+        L = zeros(length(Q_obs),1);     % leaching hourly [m/h]
         
-        % Infiltration
+        % Infiltration [m/h]
         K_sat_vect = ones(length(P),1)*K_sat;  % K_sat vector to compare with precipitation
         I = min(P,K_sat_vect);
         I_hour_year = reshape(I,N_hours_per_year,Nyears); %reshaping infiltration vector into matrix with hours in lines and years in columns
         
         % Runoff
-        R = P-I;
+        R = P-I; % [m/h]
         
         for y=1:Nyears
             for m=1:12
