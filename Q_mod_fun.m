@@ -1,5 +1,10 @@
 function Q_mod = Q_mod_fun(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1, n, Q_b, A, phi,mode)
 
+
+%%% NE PAS MODIFIER CETTE FONCTION -> hydrological_model.m a la place :)
+
+
+
 % This function computes the hydrological model (ie the discharge, runoff, infiltration,
 %saturation, leaching and potential evapotranspiration. It can run the hydrological
 %model for every hour (mode =0), every day in a month (mode =1), every month in a year (mode=2),
@@ -83,11 +88,11 @@ function Q_mod = Q_mod_fun(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1
 
                     qsup(t) = Vsup(t)/t_sup;    %[m/h]
                     Vsup(t+1)=Vsup(t)+ R(t) - qsup(t); % [m]
-                    Qsup(t)=A*qsup(t)/3.6;         % [m^3/h]
+                    Qsup(t)=A*qsup(t)/3600.0;         % [m^3/h]
 
                     qsub(t) = Vsub(t)/t_sub;
                     Vsub(t+1)=Vsub(t)+L(t)-(qsub(t));
-                    Qsub(t)=A*qsup(t)/3.6;
+                    Qsub(t)=A*qsup(t)/3600.0;
 
                     Q_mod(t) = Qsub(t)+Qsup(t)+Q_b(t);
                 end
