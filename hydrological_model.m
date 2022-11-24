@@ -1,4 +1,4 @@
-function Q_mod = hydrological_model(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1, n, Q_b, A, phi)
+function [Q_mod,R,I] = hydrological_model(P, Q_obs, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1, n, Q_b, A)
 
 % This function computes the hydrological model (ie the discharge, runoff, infiltration,
 %saturation, leaching and potential evapotranspiration in [m^3/s]). It can run the hydrological
