@@ -11,8 +11,13 @@ function [Q_mod,R,I] = hydrological_model(P, ET_0, kc, K_sat, c, t_sub, t_sup, z
     day_month=[31 28 31 30 31 30 31 31 30 31 30 31]; % number of days for each month
     hour_month=day_month*24;                         % number of hours for each month
     
+<<<<<<< HEAD
     %month_end=cumsum(day_month);                     % last day of each month
     %month_start=month_end-day_month+1;               % first day of each month
+=======
+    month_end = cumsum(day_month);                     % last day of each month
+    month_start = month_end-day_month+1;               % first day of each month
+>>>>>>> 331ec866d35bb0503b32415f86f774caa47164f3
     
     month_end_hour=cumsum(hour_month);               % last hour of each month   
     month_start_hour=month_end_hour-hour_month+1;    % fisrt hour of each month
