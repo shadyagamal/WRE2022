@@ -1,4 +1,4 @@
-function [Q_mod,R,I] = hydrological_model(P, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1, n, Q_b, A,doTest)
+function [Q_mod,R,I, s, ET, L] = hydrological_model(P, ET_0, kc, K_sat, c, t_sub, t_sup, z, sw, s1, n, Q_b, A,doTest)
 
 % This function computes the hydrological model (ie the discharge, runoff, infiltration,
 %saturation, leaching and potential evapotranspiration in [m^3/s]). It can run the hydrological
@@ -10,29 +10,19 @@ function [Q_mod,R,I] = hydrological_model(P, ET_0, kc, K_sat, c, t_sub, t_sup, z
     N_hours_per_year = 365*24;                       % number of hours per year 
     day_month=[31 28 31 30 31 30 31 31 30 31 30 31]; % number of days for each month
     hour_month=day_month*24;                         % number of hours for each month
-    
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     %month_end=cumsum(day_month);                     % last day of each month
     %month_start=month_end-day_month+1;               % first day of each month
-=======
-    month_end = cumsum(day_month);                     % last day of each month
-    month_start = month_end-day_month+1;               % first day of each month
->>>>>>> 331ec866d35bb0503b32415f86f774caa47164f3
-=======
-    %month_end=cumsum(day_month);                     % last day of each month
-    %month_start=month_end-day_month+1;               % first day of each month
->>>>>>> 01cee89a59418cd65870c9c24a027c119dd44f5a
-    
+
     month_end_hour=cumsum(hour_month);               % last hour of each month   
     month_start_hour=month_end_hour-hour_month+1;    % fisrt hour of each month
 
 
-   
+
     % Settings
     s = zeros(size(P));    % saturation vector
     s(1) = 0.5;            % initial arbitrary value
-    
+
     Q_mod = zeros(size(P));    %Discharge
     R = zeros(size(P));    %Run off
     I = zeros(size(P));    %Infiltration
@@ -45,9 +35,9 @@ function [Q_mod,R,I] = hydrological_model(P, ET_0, kc, K_sat, c, t_sub, t_sup, z
     Qsup = zeros(size(P)); %Superficial discharge
     Qsub = zeros(size(P)); %Sub-superficial discharge
     dt = 1;
-   
 
-    
+
+
     for y=1:Nyears
         for m=1:12
             for h=month_start_hour(m):month_end_hour(m)
@@ -82,7 +72,7 @@ function [Q_mod,R,I] = hydrological_model(P, ET_0, kc, K_sat, c, t_sub, t_sup, z
             end
         end
     end
-    
+
  %compute total discharge Q    
 if doTest     % if doTest=1, check mass balance 
 
@@ -93,11 +83,11 @@ if doTest     % if doTest=1, check mass balance
 
     %"testS" balance for the root zone (input/output). testS close to unity: necessary (but not sufficient) 
     %condition for the implementation to be correct 
-    testS=P_tot/(ET_tot+R_tot+L_tot+n*z*(s(end)-s(1)))
+    testS=P_tot/(ET_tot+R_tot+L_tot+n*z*(s(end)-s(1))) ;
 
     %"testQ" balance for the whole system (input/output). testQ close to unity: necessary (but not sufficient) 
     %condition for the implementation to be correct 
-    testQ=sum(P-ET)/(sum(qsup+qsub)+n*z*(s(end)-s(1))+Vsup(end)+Vsub(end))
+    testQ=sum(P-ET)/(sum(qsup+qsub)+n*z*(s(end)-s(1))+Vsup(end)+Vsub(end)) ;
 end   
-    
+
 end
