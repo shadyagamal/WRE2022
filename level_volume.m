@@ -12,4 +12,8 @@ function l=level_volume(Volume,level,V)
 %l=level correspondent to the "V" value
 
 index=find(Volume<=V,1,'last');
+%if index == 23
+%    l=level(index)+(24-level(index))*(V-Volume(index))/(262990000-Volume(index));
+%else
 l=level(index)+(level(index+1)-level(index))*(V-Volume(index))/(Volume(index+1)-Volume(index));
+%end
